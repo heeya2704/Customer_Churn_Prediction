@@ -1,0 +1,15 @@
+{
+  "name": "customer-churn-prediction",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Telecom customer churn prediction — React frontend + FastAPI/ML backend deployed as a single Vercel project.",
+  "scripts": {
+    "install:frontend": "cd frontend && npm install",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm install && npm run build",
+    "test:frontend": "cd frontend && npm test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

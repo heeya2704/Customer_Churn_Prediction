@@ -1,0 +1,15 @@
+# Development, training, EDA, and testing dependencies.
+# Install with: pip install -r requirements.txt -r requirements-dev.txt
+-r requirements.txt
+
+# Local API server
+uvicorn[standard]==0.34.0
+python-dotenv==1.0.1
+
+# EDA / visualization (used by training/eda.py, not needed at inference time)
+matplotlib==3.8.4
+seaborn==0.13.2
+
+# Testing
+pytest==8.3.4
+httpx==0.28.1
