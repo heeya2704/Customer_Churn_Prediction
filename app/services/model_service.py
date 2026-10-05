@@ -35,8 +35,16 @@ class ModelService:
         self._metrics: dict = {}
         self._metadata: dict = {}
 
-    def load(self) -> None:
-        """Load model artifacts from disk. Safe to call once at startup."""
+    def load(self, force: bool = False) -> None:
+        """Load model artifacts from disk.
+
+        Idempotent: a no-op if already loaded (unless ``force``). This lets us
+        load both at import time (so it works on serverless platforms that don't
+        run ASGI lifespan startup) and again in the app lifespan, without
+        reloading the model twice.
+        """
+        if self._pipeline is not None and not force:
+            return
         model_path = self._settings.model_path
         if not model_path.exists():
             logger.error(

@@ -14,9 +14,15 @@ _settings = get_settings()
 model_service = ModelService(_settings)
 dataset_service = DatasetService(_settings, model_service)
 
+# Load the model at import time. This is important for serverless platforms
+# (e.g. Vercel) whose ASGI runtime may not trigger FastAPI's lifespan startup.
+# load() is idempotent and never raises, so importing stays safe even if the
+# model file is missing (the health endpoint then reports model_loaded=false).
+model_service.load()
+
 
 def init_services() -> None:
-    """Load model artifacts. Called once during app startup."""
+    """(Re)load model artifacts. Called from the app lifespan for local runs."""
     model_service.load()
 
 
