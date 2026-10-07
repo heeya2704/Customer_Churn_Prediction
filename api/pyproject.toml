@@ -2,3 +2,11 @@
 name = "customer-churn-api"
 version = "0.1.0"
 requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi==0.115.6",
+    "pydantic==2.10.4",
+    "pandas==2.2.2",
+    "numpy==2.2.6",
+    "scikit-learn==1.5.1",
+    "joblib==1.4.2",
+]

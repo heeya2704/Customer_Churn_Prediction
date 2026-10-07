@@ -45,7 +45,7 @@ class Settings:
         # Comma-separated list of allowed CORS origins.
         raw_origins = os.getenv(
             "CORS_ORIGINS",
-            "http://localhost:5173,http://127.0.0.1:5173",
+            "http://localhost:5173,http://127.0.0.1:5173,"
             "https://customer-churn-prediction-3zjl.vercel.app",
         )
         self.cors_origins: list[str] = [
