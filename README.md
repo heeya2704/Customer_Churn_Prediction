@@ -179,7 +179,8 @@ customer-churn-prediction/
 ├── requirements.txt          # lean runtime deps (serverless)
 ├── requirements-dev.txt      # + uvicorn, matplotlib, seaborn, pytest
 ├── vercel.json               # single-project routing + includeFiles
-├── package.json              # root build orchestration for Vercel
+├── scripts/                  # setup.mjs, py.mjs (runs the .venv Python)
+├── package.json              # `npm run dev` / `npm test` / Vercel build
 └── .env.example / .gitignore
 ```
 
@@ -189,32 +190,34 @@ customer-churn-prediction/
 
 **Prerequisites:** Python 3.11+ and Node 18+.
 
-### 1. Backend / ML
+### Quick start (one terminal)
 
 ```bash
-# from the repo root
-python -m venv .venv
-# Windows:  .venv\Scripts\activate
-# macOS/Linux:  source .venv/bin/activate
+# from the repo root — one-time: creates .venv, installs Python + npm deps
+npm run setup
 
-pip install -r requirements.txt -r requirements-dev.txt
-
-# (Optional) retrain — a trained model is already committed in model/
-python training/train.py
-
-# Run the API
-uvicorn app.main:app --reload --port 8000
-# → http://localhost:8000   (docs at http://localhost:8000/docs)
-```
-
-### 2. Frontend
-
-```bash
-cd frontend
-npm install
+# starts the FastAPI backend (port 8000) AND the Vite frontend (port 5173)
 npm run dev
-# → http://localhost:5173   (proxies /api to http://localhost:8000)
 ```
+
+Logs from both servers appear in the same terminal, prefixed `[api]` and `[web]`.
+Press `Ctrl+C` once to stop both. The backend runs with the `.venv` Python
+automatically — no need to activate it.
+
+| Script                   | What it does                                   |
+| ------------------------ | ---------------------------------------------- |
+| `npm run dev`            | Backend + frontend together                    |
+| `npm run dev:backend`    | Only the API (`uvicorn --reload`, port 8000)    |
+| `npm run dev:frontend`   | Only the Vite dev server (port 5173)           |
+| `npm test`               | Backend (pytest) then frontend (vitest) tests  |
+
+(Optional) retrain — a trained model is already committed in `model/`:
+
+```bash
+node scripts/py.mjs training/train.py
+```
+
+API docs: http://localhost:8000/docs. The frontend proxies `/api` to the backend.
 
 Open **http://localhost:5173**.
 
