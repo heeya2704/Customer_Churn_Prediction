@@ -21,6 +21,6 @@ def dataset_stats(
         return dataset.stats()
     except FileNotFoundError:
         raise HTTPException(status_code=503, detail="Dataset is unavailable")
-    except Exception:  # noqa: BLE001
-        logger.exception("Failed to compute dataset statistics")
-        raise HTTPException(status_code=500, detail="Failed to compute statistics")
+    except Exception as exc:  # noqa: BLE001
+        logger.exception("Failed to compute dataset statistics: %s", exc)
+        raise HTTPException(status_code=500, detail=f"Failed to compute statistics: {exc}")
