@@ -11,7 +11,12 @@
   "outputDirectory": "frontend/dist",
   "functions": {
     "api/index.py": {
-      "includeFiles": "app/**,model/**,data/**,requirements.txt"
+      "includeFiles": [
+        "app/**",
+        "model/**",
+        "data/**",
+        "requirements.txt"
+      ]
     }
   },
   "rewrites": [
